@@ -103,7 +103,7 @@ NG="X_X "
 
 PROMPT=""
 PROMPT+="%(?.%F{green}$OK%f.%F{red}$NG%f) "
-PROMPT+="%F{blue}%~%f"
+PROMPT+="%F{white}%~%f"
 PROMPT+="\$(vcs_prompt_info)"
 PROMPT+="
 "
@@ -159,7 +159,9 @@ function title {
 export PATH="$HOME/.rbenv/shims:$PATH"
 #eval "$(rbenv init -)"
 
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
-eval "$(pyenv init -)"
+#export PYENV_ROOT=$HOME/.pyenv
+#export PATH=$PYENV_ROOT/bin:$PATH
+#eval "$(pyenv init -)"
+
+export PATH=$HOME/Library/Android/sdk/platform-tools/:$PATH
 
