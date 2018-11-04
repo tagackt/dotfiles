@@ -7,7 +7,7 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # エディタ
-export EDITOR=/usr/local/bin/vim
+export EDITOR=/usr/bin/vim
 
 # ページャ
 #export PAGER=/usr/local/bin/vimpager
@@ -23,6 +23,10 @@ export LSCOLORS=gxfxcxdxbxegedabagacad
 ## 補完機能の強化
 autoload -U compinit
 compinit
+
+#autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
 
 ## 入力しているコマンド名が間違っている場合にもしかして：を出す。
 setopt correct
@@ -51,6 +55,20 @@ setopt auto_pushd
 
 # ディレクトリ名を入力するだけでcdできるようにする
 setopt auto_cd
+
+# コマンド履歴をタブ間で共有
+setopt share_history
+
+# コマンド履歴検索
+# ctr + R
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
 
 # -------------------------------------
 # パス
@@ -156,12 +174,20 @@ function title {
     echo -ne "\033]0;"$*"\007"
 }
 
+# ruby
 export PATH="$HOME/.rbenv/shims:$PATH"
 #eval "$(rbenv init -)"
 
+# python
 #export PYENV_ROOT=$HOME/.pyenv
 #export PATH=$PYENV_ROOT/bin:$PATH
 #eval "$(pyenv init -)"
 
-export PATH=$HOME/Library/Android/sdk/platform-tools/:$PATH
+# android
+export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+export ANDROID_HOME=$HOME/Library/Android/sdk
 
+
+# php
+# export PATH="$PATH:$HOME/.phpenv/bin"
+# eval "$(phpenv init -)"
